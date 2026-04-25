@@ -24,6 +24,15 @@ public class Plataforma {
         this.contenido.remove(pelicula);
     }
 
+    public Pelicula buscarPorTitulo(String titulo) {
+        for (Pelicula pelicula : contenido) {
+            if (pelicula.getTitulo().equalsIgnoreCase(titulo)) {
+                return pelicula;
+            }
+        }
+        return null;
+    }
+
     public void agregar(Pelicula pelicula) {
         this.contenido.add(pelicula);
     }

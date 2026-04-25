@@ -13,40 +13,73 @@ import java.time.LocalDateTime;
 public class Main {
     public static final String VERSION = "1.0.1";
     public static final String NOMBRE = "Platzi Play";
+    public static final int AGREGAR = 1;
+    public static final int MOSTRAR_TODO = 2;
+    public static final int BUSCAR_POR_TITULO = 3;
+    public static final int ELIMINAR = 4;
+    public static final int SALIR = 5;
+
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE);
         System.out.println(NOMBRE + " v" + VERSION);
 
-        String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
-        int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
-        String genero = ScannerUtils.capturarTexto("Genero del contenido");
-        double calificacion = ScannerUtils.capturarDouble("Calificacion del contenido");
+        cargarPeliculas(plataforma);
 
+        while(true) {
+            int opcionElegida = ScannerUtils.capturarNumero("""
+                    INGRESE UNA DE LAS SIGUIENTES OPCIONES:
+                    1. Agregar contenido
+                    2. Mostrar todo
+                    3. Buscar por titulo
+                    4. Eliminar
+                    5. Salir
+                    """);
+            System.out.println("Opcion elegida: " + opcionElegida);
 
-       // Pelicula pelicula = new Pelicula();
-        Pelicula pelicula = new Pelicula(nombre, duracion, genero, calificacion);
-        Pelicula pelicula1 = new Pelicula("Fores Gump", 220, "Accion");
-        pelicula.calificar(calificacion);
+            switch (opcionElegida) {
+                case AGREGAR -> {
+                    String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
+                    int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
+                    String genero = ScannerUtils.capturarTexto("Genero del contenido");
+                    double calificacion = ScannerUtils.capturarDouble("Calificacion del contenido");
+                    Pelicula pelicula = new Pelicula(nombre, duracion, genero, calificacion);
+                    plataforma.agregar(pelicula);
+                }
+                case MOSTRAR_TODO -> plataforma.mostrarTitulos();
+                case BUSCAR_POR_TITULO -> {
+                    String nombreBuscar = ScannerUtils.capturarTexto("Nombre del contenido");
+                    Pelicula pelicula = plataforma.buscarPorTitulo(nombreBuscar);
 
-        plataforma.agregar(pelicula);
-        plataforma.agregar(pelicula1);
-        System.out.println("Numero de elementos en la plataforma " + plataforma.getContenido().size());
-        plataforma.eliminar(pelicula1);
+                    if(pelicula != null) {
+                        System.out.println(pelicula.obtenerFechaTecnica());
+                    } else {
+                        System.out.println(nombreBuscar + " no existe dentro de la "+ plataforma.getNombre());
+                    }
+                }
+                case ELIMINAR -> {
+                    String nombreAEliminar = ScannerUtils.capturarTexto("Nombre del contenido a Eliminar");
+                    Pelicula contenido = plataforma.buscarPorTitulo(nombreAEliminar);
 
-        plataforma.mostrarTitulos();
+                    if(contenido != null) {
+                        plataforma.eliminar(contenido);
+                        System.out.println(nombreAEliminar + " eliminado!");
+                    } else {
+                        System.out.println(nombreAEliminar + " no existe dentro de la "+ plataforma.getNombre());
+                    }
+                }
+                case SALIR -> System.exit(0);
 
-        //System.out.println(pelicula.obtenerFechaTecnica());
+            }
+        }
+    }
 
-//        long duracionLong = pelicula.duracion; // Aqui duracion es int y lo convertimos a long pero nosotros no hacemos nada
-//        int calificacionInt = (int) pelicula.calificacion; // el casteo es explicito por que calificacion es double y al convertirlo
-                                                           // a int perdemos sus decimales
-       // int numeroDePremios = (int) Long.parseLong("25000000000");
-
-        // Este es el constructor con parametros
-        Usuario usuario = new Usuario("Daniel", "daniel@gmail.com");
-
-        usuario.ver(pelicula);
-        System.out.println(usuario.fechaRegistro);
-
+    private static void cargarPeliculas(Plataforma plataforma) {
+        plataforma.agregar(new Pelicula("Shrek", 90, "Animada"));
+        plataforma.agregar(new Pelicula("Inception", 148, "Animada"));
+        plataforma.agregar(new Pelicula("John Wick", 101, "Acción", 4.6));
+        plataforma.agregar(new Pelicula("EL conjuro", 190, "Terror", 3.5));
+        plataforma.agregar(new Pelicula("coco", 190, "Animada", 4.7));
+        plataforma.agregar(new Pelicula("Joker", 190, "Drama", 5));
+        plataforma.agregar(new Pelicula("Avengers: Endgame", 181, "Accion", 4.2));
     }
 }
