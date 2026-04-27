@@ -3,6 +3,7 @@ package platzi.play.plataforma;
 import platzi.play.contenido.Pelicula;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Plataforma {
@@ -14,8 +15,10 @@ public class Plataforma {
         this.contenido = new ArrayList<>(); // Esta es la forma de inicializar un List
     }
 
-    public void mostrarTitulos() {
-        contenido.forEach(contenido -> System.out.println(contenido.getTitulo()));
+    public List<String> getTitulos() {
+        return contenido.stream()
+                .map(Pelicula::getTitulo)
+                .toList();
     }
 
     public void eliminar(Pelicula pelicula) {
@@ -29,10 +32,43 @@ public class Plataforma {
                 .orElse(null);
     }
 
+    public int getDuracionTotal() {
+        return contenido.stream()
+                .mapToInt(Pelicula::getDuracion)
+                .sum();
+    }
+
     public List<Pelicula> buscarPorGenero(String genero) {
         return contenido.stream()
                 .filter(contenido -> contenido.getGenero().equalsIgnoreCase(genero))
                 .toList();
+    }
+
+    public List<Pelicula> getPopulares(int cantidad) {
+        return contenido.stream()
+                .sorted(Comparator.comparingDouble(Pelicula::getCalificacion).reversed())
+                .limit(cantidad)
+                .toList();
+    }
+
+    public List<Pelicula> getPopularesMayoresA4() {
+        return contenido.stream()
+                .filter(contenido -> contenido.getCalificacion() >= 4)
+                .toList();
+    }
+
+    public Pelicula getPeliculaMasLarga() {
+        return contenido.stream()
+                .sorted(Comparator.comparing(Pelicula::getDuracion).reversed())
+                .findFirst()
+                .get();
+    }
+
+    public Pelicula getPeliculaMasCorta() {
+        return contenido.stream()
+                .sorted(Comparator.comparing(Pelicula::getDuracion))
+                .findFirst()
+                .get();
     }
 
     public void agregar(Pelicula pelicula) {

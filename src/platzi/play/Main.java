@@ -7,9 +7,8 @@ import platzi.play.util.ScannerUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-
-// import java.util.Scanner;
 
 public class Main {
     public static final String VERSION = "1.0.1";
@@ -18,14 +17,19 @@ public class Main {
     public static final int MOSTRAR_TODO = 2;
     public static final int BUSCAR_POR_TITULO = 3;
     public static final int BUSCAR_POR_GENERO = 4;
-    public static final int ELIMINAR = 8;
-    public static final int SALIR = 9;
+    public static final int VER_POPULARES = 5;
+    public static final int VER_POPULARES_MAYORES_A_4 = 6;
+    public static final int PELICULA_MAS_LARGA = 7;
+    public static final int PELICULA_MAS_CORTA = 8;
+    public static final int ELIMINAR = 9;
+    public static final int SALIR = 10;
 
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE);
         System.out.println(NOMBRE + " v" + VERSION);
 
         cargarPeliculas(plataforma);
+        System.out.println("Mas de " + plataforma.getDuracionTotal() + " minutos de contenido! \n");
 
         while(true) {
             int opcionElegida = ScannerUtils.capturarNumero("""
@@ -34,8 +38,12 @@ public class Main {
                     2. Mostrar todo
                     3. Buscar por titulo
                     4. Buscar por genero
-                    8. Eliminar
-                    9. Salir
+                    5. Ver populares
+                    6. Ver populares mayores a 4
+                    7. Pelicula mas larga
+                    8. Pelicula mas corta
+                    9. Eliminar
+                    10. Salir
                     """);
             System.out.println("Opcion elegida: " + opcionElegida);
 
@@ -48,7 +56,10 @@ public class Main {
                     Pelicula pelicula = new Pelicula(nombre, duracion, genero, calificacion);
                     plataforma.agregar(pelicula);
                 }
-                case MOSTRAR_TODO -> plataforma.mostrarTitulos();
+                case MOSTRAR_TODO -> {
+                    List<String> titulos = plataforma.getTitulos();
+                    titulos.forEach(System.out::println);
+                }
                 case BUSCAR_POR_TITULO -> {
                     String nombreBuscar = ScannerUtils.capturarTexto("Nombre del contenido");
                     Pelicula pelicula = plataforma.buscarPorTitulo(nombreBuscar);
@@ -67,6 +78,24 @@ public class Main {
                     if(peliculasPorGenero != null) {
                         peliculasPorGenero.forEach(contenido -> System.out.println(contenido.obtenerFechaTecnica() + "\n"));
                     }
+                }
+                case VER_POPULARES -> {
+                    int cantidad = ScannerUtils.capturarNumero("Cantidad del contenido a mostrar");
+
+                    List<Pelicula> contenidoPupulares = plataforma.getPopulares(cantidad);
+                    contenidoPupulares.forEach(contenido -> System.out.println(contenido.obtenerFechaTecnica() + "\n"));
+                }
+                case VER_POPULARES_MAYORES_A_4 -> {
+                    List<Pelicula> contenidoPupularesMayoresA4 = plataforma.getPopularesMayoresA4();
+                    contenidoPupularesMayoresA4.forEach(contenido -> System.out.println(contenido.obtenerFechaTecnica() + "\n"));
+                }
+                case PELICULA_MAS_LARGA -> {
+                    Pelicula peliculaMasLarga = plataforma.getPeliculaMasLarga();
+                    System.out.println(peliculaMasLarga.obtenerFechaTecnica() + "\n\n");
+                }
+                case PELICULA_MAS_CORTA -> {
+                    Pelicula peliculaMasCorta = plataforma.getPeliculaMasCorta();
+                    System.out.println(peliculaMasCorta.obtenerFechaTecnica() + "\n\n");
                 }
                 case ELIMINAR -> {
                     String nombreAEliminar = ScannerUtils.capturarTexto("Nombre del contenido a Eliminar");
