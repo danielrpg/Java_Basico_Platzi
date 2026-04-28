@@ -1,6 +1,8 @@
 package platzi.play.util;
 
+import platzi.play.contenido.Calidad;
 import platzi.play.contenido.Genero;
+import platzi.play.contenido.Idioma;
 
 import java.util.Scanner;
 
@@ -53,6 +55,42 @@ public class ScannerUtils {
                 return Genero.valueOf(entrada.toUpperCase());
             } catch (IllegalArgumentException e) {
                 System.out.println("Genero no acptado. " + mensaje + "; ");
+            }
+        }
+    }
+
+    public static Idioma capturarIdioma(String mensaje) {
+        while(true) {
+            System.out.println(mensaje + "... Opciones");
+            for (Idioma idioma : Idioma.values()) {
+                System.out.println("-" + idioma.name());
+            }
+            System.out.println("Cual quieres?");
+            String entrada = SCANNER.nextLine();
+
+
+            try {
+                return Idioma.valueOf(entrada.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Idioma no acptado. " + mensaje + "; ");
+            }
+        }
+    }
+
+    public static Calidad capturarCalidad(String mensaje) {
+        while(true) {
+            System.out.println(mensaje + "... Opciones");
+            for (Calidad calidad : Calidad.values()) {
+                System.out.println("-" + calidad.name());
+            }
+            System.out.println("Cual quieres?");
+            String entrada = SCANNER.nextLine();
+
+
+            try {
+                return Calidad.valueOf(entrada.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Calidad no acptado. " + mensaje + "; ");
             }
         }
     }

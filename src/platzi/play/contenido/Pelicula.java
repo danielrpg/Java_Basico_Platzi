@@ -7,20 +7,24 @@ public class Pelicula {
     private String description; // igual aqui
     private int duracion; // valores enteros -> valor por defecto 0
     private Genero genero; // Aqui tambien
+    private Idioma idioma;
+    private Calidad calidad;
     private LocalDate fechaEstreno;
     private double calificacion; // valores decimales
     private boolean disponible; // boolean true o false -> valor por defecto false
 
-    public Pelicula(String titulo, int duracion, Genero genero) {
+    public Pelicula(String titulo, int duracion, Genero genero, Idioma idioma, Calidad calidad) {
         this.titulo = titulo; // aqui inicializamos los datos con el valor que viene de parametro
         this.duracion = duracion;
         this.genero = genero;
+        this.idioma = idioma;
+        this.calidad = calidad;
         this.fechaEstreno = LocalDate.now();
         this.disponible = true;
     }
 
-    public Pelicula(String titulo, int duracion, Genero genere, double calificacion) {
-        this(titulo, duracion, genere); // reasigna usando el anterior constructor
+    public Pelicula(String titulo, int duracion, Genero genero, Idioma idioma, Calidad calidad, double calificacion) {
+        this(titulo, duracion, genero, idioma, calidad); // reasigna usando el anterior constructor
         this.calificar(calificacion);
     }
 
@@ -60,6 +64,14 @@ public class Pelicula {
         return genero;
     }
 
+    public Idioma getIdioma() {
+        return idioma;
+    }
+
+    public Calidad getCalidad() {
+        return calidad;
+    }
+
     public int getDuracion() {
         return duracion;
     }
@@ -78,6 +90,14 @@ public class Pelicula {
 
     public void setGenero(Genero genero) {
         this.genero = genero;
+    }
+
+    public void setCalidad(Calidad calidad) {
+        this.calidad = calidad;
+    }
+
+    public void setIdioma(Idioma idioma) {
+        this.idioma = idioma;
     }
 
     public void setFechaEstreno(LocalDate fechaEstreno) {

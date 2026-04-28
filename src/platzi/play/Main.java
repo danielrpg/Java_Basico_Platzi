@@ -1,6 +1,8 @@
 package platzi.play;
 
+import platzi.play.contenido.Calidad;
 import platzi.play.contenido.Genero;
+import platzi.play.contenido.Idioma;
 import platzi.play.contenido.Pelicula;
 import platzi.play.plataforma.Plataforma;
 import platzi.play.util.ScannerUtils;
@@ -48,8 +50,10 @@ public class Main {
                     String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
                     int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
                     Genero genero = ScannerUtils.capturarGenero("Genero del contenido");
+                    Idioma idioma = ScannerUtils.capturarIdioma("Idioma del Contenido");
+                    Calidad calida = ScannerUtils.capturarCalidad("Calidad del Contenido");
                     double calificacion = ScannerUtils.capturarDouble("Calificacion del contenido");
-                    Pelicula pelicula = new Pelicula(nombre, duracion, genero, calificacion);
+                    Pelicula pelicula = new Pelicula(nombre, duracion, genero, idioma, calida, calificacion);
                     plataforma.agregar(pelicula);
                 }
                 case MOSTRAR_TODO -> {
@@ -109,13 +113,13 @@ public class Main {
     }
 
     private static void cargarPeliculas(Plataforma plataforma) {
-        plataforma.agregar(new Pelicula("Shrek", 90, Genero.ANIMADA));
-        plataforma.agregar(new Pelicula("Inception", 148, Genero.ANIMADA));
-        plataforma.agregar(new Pelicula("John Wick", 101, Genero.ACCION, 4.6));
-        plataforma.agregar(new Pelicula("EL conjuro", 190, Genero.TERROR, 3.5));
-        plataforma.agregar(new Pelicula("coco", 190, Genero.ANIMADA, 4.7));
-        plataforma.agregar(new Pelicula("Joker", 190, Genero.DRAMA, 5));
-        plataforma.agregar(new Pelicula("Avengers: Endgame", 181, Genero.ACCION, 4.2));
-        plataforma.agregar(new Pelicula("Interstellar", 181, Genero.CIENCIA_FICCION, 4.5));
+        plataforma.agregar(new Pelicula("Shrek", 90, Genero.ANIMADA, Idioma.INGLES, Calidad.HD));
+        plataforma.agregar(new Pelicula("Inception", 148, Genero.ANIMADA, Idioma.INGLES, Calidad.BAJA));
+        plataforma.agregar(new Pelicula("John Wick", 101, Genero.ACCION, Idioma.ESPANOL, Calidad.ALTA, 4.6));
+        plataforma.agregar(new Pelicula("EL conjuro", 190, Genero.TERROR, Idioma.ESPANOL, Calidad.ALTA,3.5));
+        plataforma.agregar(new Pelicula("coco", 190, Genero.ANIMADA, Idioma.ESPANOL, Calidad.ALTA,4.7));
+        plataforma.agregar(new Pelicula("Joker", 190, Genero.DRAMA, Idioma.ESPANOL, Calidad.ALTA,5));
+        plataforma.agregar(new Pelicula("Avengers: Endgame", 181, Genero.ACCION, Idioma.ESPANOL, Calidad.ALTA,4.2));
+        plataforma.agregar(new Pelicula("Interstellar", 181, Genero.CIENCIA_FICCION, Idioma.ESPANOL, Calidad.ALTA,4.5));
     }
 }
