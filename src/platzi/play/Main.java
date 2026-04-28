@@ -1,13 +1,9 @@
 package platzi.play;
 
+import platzi.play.contenido.Genero;
 import platzi.play.contenido.Pelicula;
 import platzi.play.plataforma.Plataforma;
-import platzi.play.plataforma.Usuario;
 import platzi.play.util.ScannerUtils;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -51,7 +47,7 @@ public class Main {
                 case AGREGAR -> {
                     String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
                     int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
-                    String genero = ScannerUtils.capturarTexto("Genero del contenido");
+                    Genero genero = ScannerUtils.capturarGenero("Genero del contenido");
                     double calificacion = ScannerUtils.capturarDouble("Calificacion del contenido");
                     Pelicula pelicula = new Pelicula(nombre, duracion, genero, calificacion);
                     plataforma.agregar(pelicula);
@@ -71,13 +67,11 @@ public class Main {
                     }
                 }
                 case BUSCAR_POR_GENERO -> {
-                    String genero = ScannerUtils.capturarTexto("Genero del contenido");
+                    Genero genero = ScannerUtils.capturarGenero("Genero del contenido");
                     List<Pelicula> peliculasPorGenero = plataforma.buscarPorGenero(genero);
                     System.out.println(peliculasPorGenero.size() + " peliculas del contenido");
 
-                    if(peliculasPorGenero != null) {
-                        peliculasPorGenero.forEach(contenido -> System.out.println(contenido.obtenerFechaTecnica() + "\n"));
-                    }
+                    peliculasPorGenero.forEach(contenido -> System.out.println(contenido.obtenerFechaTecnica() + "\n"));
                 }
                 case VER_POPULARES -> {
                     int cantidad = ScannerUtils.capturarNumero("Cantidad del contenido a mostrar");
@@ -115,12 +109,13 @@ public class Main {
     }
 
     private static void cargarPeliculas(Plataforma plataforma) {
-        plataforma.agregar(new Pelicula("Shrek", 90, "Animada"));
-        plataforma.agregar(new Pelicula("Inception", 148, "Animada"));
-        plataforma.agregar(new Pelicula("John Wick", 101, "Acción", 4.6));
-        plataforma.agregar(new Pelicula("EL conjuro", 190, "Terror", 3.5));
-        plataforma.agregar(new Pelicula("coco", 190, "Animada", 4.7));
-        plataforma.agregar(new Pelicula("Joker", 190, "Drama", 5));
-        plataforma.agregar(new Pelicula("Avengers: Endgame", 181, "Accion", 4.2));
+        plataforma.agregar(new Pelicula("Shrek", 90, Genero.ANIMADA));
+        plataforma.agregar(new Pelicula("Inception", 148, Genero.ANIMADA));
+        plataforma.agregar(new Pelicula("John Wick", 101, Genero.ACCION, 4.6));
+        plataforma.agregar(new Pelicula("EL conjuro", 190, Genero.TERROR, 3.5));
+        plataforma.agregar(new Pelicula("coco", 190, Genero.ANIMADA, 4.7));
+        plataforma.agregar(new Pelicula("Joker", 190, Genero.DRAMA, 5));
+        plataforma.agregar(new Pelicula("Avengers: Endgame", 181, Genero.ACCION, 4.2));
+        plataforma.agregar(new Pelicula("Interstellar", 181, Genero.CIENCIA_FICCION, 4.5));
     }
 }

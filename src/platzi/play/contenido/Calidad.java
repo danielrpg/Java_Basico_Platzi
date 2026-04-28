@@ -1,0 +1,4 @@
+package platzi.play.contenido;
+
+public enum Calidad {
+}

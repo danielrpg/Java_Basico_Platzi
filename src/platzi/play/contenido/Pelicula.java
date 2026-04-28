@@ -6,12 +6,12 @@ public class Pelicula {
     private String titulo; // tipo String sino se asigna simpre va ser null
     private String description; // igual aqui
     private int duracion; // valores enteros -> valor por defecto 0
-    private String genero; // Aqui tambien
+    private Genero genero; // Aqui tambien
     private LocalDate fechaEstreno;
     private double calificacion; // valores decimales
     private boolean disponible; // boolean true o false -> valor por defecto false
 
-    public Pelicula(String titulo, int duracion, String genero) {
+    public Pelicula(String titulo, int duracion, Genero genero) {
         this.titulo = titulo; // aqui inicializamos los datos con el valor que viene de parametro
         this.duracion = duracion;
         this.genero = genero;
@@ -19,8 +19,8 @@ public class Pelicula {
         this.disponible = true;
     }
 
-    public Pelicula(String titulo, int duracion, String genere, double calificacion) {
-        this(titulo, duracion, genere);
+    public Pelicula(String titulo, int duracion, Genero genere, double calificacion) {
+        this(titulo, duracion, genere); // reasigna usando el anterior constructor
         this.calificar(calificacion);
     }
 
@@ -56,7 +56,7 @@ public class Pelicula {
         return fechaEstreno;
     }
 
-    public String getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
@@ -76,7 +76,7 @@ public class Pelicula {
         this.description = description;
     }
 
-    public void setGenero(String genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
     }
 
