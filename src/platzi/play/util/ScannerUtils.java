@@ -81,7 +81,7 @@ public class ScannerUtils {
         while(true) {
             System.out.println(mensaje + "... Opciones");
             for (Calidad calidad : Calidad.values()) {
-                System.out.println("-" + calidad.name());
+                System.out.println("-" + calidad.name() + "-" + calidad.getCodeCalidadTexto());
             }
             System.out.println("Cual quieres?");
             String entrada = SCANNER.nextLine();
