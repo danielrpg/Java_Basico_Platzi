@@ -1,9 +1,6 @@
 package platzi.play;
 
-import platzi.play.contenido.Calidad;
-import platzi.play.contenido.Genero;
-import platzi.play.contenido.Idioma;
-import platzi.play.contenido.Pelicula;
+import platzi.play.contenido.*;
 import platzi.play.plataforma.Plataforma;
 import platzi.play.util.ScannerUtils;
 import java.util.List;
@@ -57,8 +54,8 @@ public class Main {
                     plataforma.agregar(pelicula);
                 }
                 case MOSTRAR_TODO -> {
-                    List<String> titulos = plataforma.getTitulos();
-                    titulos.forEach(System.out::println);
+                    List<ResumenContenido> contenidosResumidos = plataforma.getResumencontenido();
+                    contenidosResumidos.forEach(resumen -> System.out.println(resumen.toString()));
                 }
                 case BUSCAR_POR_TITULO -> {
                     String nombreBuscar = ScannerUtils.capturarTexto("Nombre del contenido");
