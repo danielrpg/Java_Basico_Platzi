@@ -4,6 +4,7 @@ import platzi.play.contenido.Calidad;
 import platzi.play.contenido.Genero;
 import platzi.play.contenido.Idioma;
 import platzi.play.contenido.Pelicula;
+import platzi.play.excepcion.PeliculaExistenteException;
 import platzi.play.plataforma.Plataforma;
 import platzi.play.util.ScannerUtils;
 import java.util.List;
@@ -54,7 +55,12 @@ public class Main {
                     Calidad calida = ScannerUtils.capturarCalidad("Calidad del Contenido");
                     double calificacion = ScannerUtils.capturarDouble("Calificacion del contenido");
                     Pelicula pelicula = new Pelicula(nombre, duracion, genero, idioma, calida, calificacion);
-                    plataforma.agregar(pelicula);
+
+                    try {
+                        plataforma.agregar(pelicula);
+                    } catch (PeliculaExistenteException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 case MOSTRAR_TODO -> {
                     List<String> titulos = plataforma.getTitulos();
