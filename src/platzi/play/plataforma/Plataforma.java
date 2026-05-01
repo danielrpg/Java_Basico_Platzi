@@ -3,6 +3,7 @@ package platzi.play.plataforma;
 import platzi.play.contenido.Genero;
 import platzi.play.contenido.Pelicula;
 import platzi.play.contenido.ResumenContenido;
+import platzi.play.excepcion.PeliculaExistenteException;
 
 import java.util.*;
 
@@ -17,12 +18,9 @@ public class Plataforma {
         this.visualizaciones = new HashMap<>();
     }
 
-    public void reproducir(Pelicula elemento) {
-        Pelicula contenido = this.buscarPorTitulo(elemento.getTitulo());
-
-        if (contenido != null) {
-            throw new
-        }
+    public void reproducir(Pelicula contenido) {
+        int contenidoActual = visualizaciones.getOrDefault(contenido, 0);
+        contenido.reproducir();
     }
 
     public List<String> getTitulos() {
@@ -88,6 +86,10 @@ public class Plataforma {
     }
 
     public void agregar(Pelicula pelicula) {
+        Pelicula contenido = this.buscarPorTitulo(pelicula.getTitulo());
+        if (contenido != null) {
+            throw new PeliculaExistenteException(pelicula.getTitulo());
+        }
         this.contenido.add(pelicula);
     }
 
