@@ -20,7 +20,15 @@ public class Plataforma {
 
     public void reproducir(Pelicula contenido) {
         int contenidoActual = visualizaciones.getOrDefault(contenido, 0);
+        System.out.println(contenido.getTitulo() + " ha sido reproducido " + contenidoActual + " veces. ");
+
+        this.contarVisualizacion(contenido);
         contenido.reproducir();
+    }
+
+    private void contarVisualizacion(Pelicula pelicula) {
+        int conteoActual = visualizaciones.getOrDefault(pelicula, 0);
+        visualizaciones.put(pelicula, conteoActual + 1);
     }
 
     public List<String> getTitulos() {

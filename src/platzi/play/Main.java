@@ -1,14 +1,11 @@
 package platzi.play;
 
-<<<<<<< HEAD
 import platzi.play.contenido.*;
-=======
 import platzi.play.contenido.Calidad;
 import platzi.play.contenido.Genero;
 import platzi.play.contenido.Idioma;
 import platzi.play.contenido.Pelicula;
 import platzi.play.excepcion.PeliculaExistenteException;
->>>>>>> e0930102c70d4fce429f0b99925098faee82637e
 import platzi.play.plataforma.Plataforma;
 import platzi.play.util.ScannerUtils;
 import java.util.List;
@@ -24,8 +21,9 @@ public class Main {
     public static final int VER_POPULARES_MAYORES_A_4 = 6;
     public static final int PELICULA_MAS_LARGA = 7;
     public static final int PELICULA_MAS_CORTA = 8;
-    public static final int ELIMINAR = 9;
-    public static final int SALIR = 10;
+    public static final int REPRODUCIR = 9;
+    public static final int ELIMINAR = 10;
+    public static final int SALIR = 11;
 
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE);
@@ -45,8 +43,9 @@ public class Main {
                     6. Ver populares mayores a 4
                     7. Pelicula mas larga
                     8. Pelicula mas corta
-                    9. Eliminar
-                    10. Salir
+                    9. Reproducir
+                    10. Eliminar
+                    11. Salir
                     """);
             System.out.println("Opcion elegida: " + opcionElegida);
 
@@ -104,6 +103,15 @@ public class Main {
                 case PELICULA_MAS_CORTA -> {
                     Pelicula peliculaMasCorta = plataforma.getPeliculaMasCorta();
                     System.out.println(peliculaMasCorta.obtenerFechaTecnica() + "\n\n");
+                }
+                case REPRODUCIR -> {
+                    String nombreAVer = ScannerUtils.capturarTexto("Nombre del contenido a reproducir");
+                    Pelicula contenido = plataforma.buscarPorTitulo(nombreAVer);
+                    if (contenido != null) {
+                        plataforma.reproducir(contenido);
+                    } else {
+                        System.out.println(nombreAVer + " no existe dentro de la "+ plataforma.getNombre());
+                    }
                 }
                 case ELIMINAR -> {
                     String nombreAEliminar = ScannerUtils.capturarTexto("Nombre del contenido a Eliminar");
