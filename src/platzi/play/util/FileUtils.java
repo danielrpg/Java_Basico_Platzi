@@ -8,14 +8,35 @@ import platzi.play.contenido.Pelicula;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FileUtils {
 
     public static final String NOMBRE_ARCHIVO = "contenido.txt";
-    public static final String SEPARADOR = "\\|";
+    public static final String SEPARADOR = "|";
+
+    public static void escribirArchivo(Pelicula contenido) {
+        String linea = String.join(SEPARADOR,
+                contenido.getTitulo(),
+                String.valueOf(contenido.getDuracion()),
+                contenido.getGenero().name(),
+                String.valueOf(contenido.getCalificacion()),
+                contenido.getFechaEstreno().toString()
+        );
+        try {
+            Files.writeString(Paths.get(NOMBRE_ARCHIVO),  // le mandamos el nombre del archivo el path
+                        linea + System.lineSeparator(), // mandamos la linea mas un separador de linea
+                    StandardOpenOption.CREATE, // le decimos que cree el archivo si no existe
+                    StandardOpenOption.APPEND // agregamos el archivo no lo sobreescribimos
+            );
+        } catch (IOException e) {
+            System.out.println("Error escribiendo el archivo " + e.getMessage());
+        }
+    }
 
     public static List<Pelicula> leerContenido() {
         List<Pelicula> peliculasDesdeArchivo = new ArrayList<>();

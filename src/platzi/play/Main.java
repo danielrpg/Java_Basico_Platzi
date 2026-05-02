@@ -60,11 +60,9 @@ public class Main {
                     double calificacion = ScannerUtils.capturarDouble("Calificacion del contenido");
                     Pelicula pelicula = new Pelicula(nombre, duracion, genero, idioma, calida, calificacion);
 
-                    try {
-                        plataforma.agregar(pelicula);
-                    } catch (PeliculaExistenteException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    FileUtils.escribirArchivo(pelicula);
+                    plataforma.agregar(pelicula);
+
                 }
                 case MOSTRAR_TODO -> {
                     List<ResumenContenido> contenidosResumidos = plataforma.getResumencontenido();
