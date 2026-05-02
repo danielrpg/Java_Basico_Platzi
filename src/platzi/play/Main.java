@@ -7,6 +7,7 @@ import platzi.play.contenido.Idioma;
 import platzi.play.contenido.Pelicula;
 import platzi.play.excepcion.PeliculaExistenteException;
 import platzi.play.plataforma.Plataforma;
+import platzi.play.util.FileUtils;
 import platzi.play.util.ScannerUtils;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class Main {
     public static final int ELIMINAR = 10;
     public static final int SALIR = 11;
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE);
         System.out.println(NOMBRE + " v" + VERSION);
 
@@ -131,13 +132,6 @@ public class Main {
     }
 
     private static void cargarPeliculas(Plataforma plataforma) {
-        plataforma.agregar(new Pelicula("Shrek", 90, Genero.ANIMADA, Idioma.INGLES, Calidad.HD));
-        plataforma.agregar(new Pelicula("Inception", 148, Genero.ANIMADA, Idioma.INGLES, Calidad.BAJA));
-        plataforma.agregar(new Pelicula("John Wick", 101, Genero.ACCION, Idioma.ESPANOL, Calidad.ALTA, 4.6));
-        plataforma.agregar(new Pelicula("EL conjuro", 190, Genero.TERROR, Idioma.ESPANOL, Calidad.ALTA,3.5));
-        plataforma.agregar(new Pelicula("coco", 190, Genero.ANIMADA, Idioma.ESPANOL, Calidad.ALTA,4.7));
-        plataforma.agregar(new Pelicula("Joker", 190, Genero.DRAMA, Idioma.ESPANOL, Calidad.ALTA,5));
-        plataforma.agregar(new Pelicula("Avengers: Endgame", 181, Genero.ACCION, Idioma.ESPANOL, Calidad.ALTA,4.2));
-        plataforma.agregar(new Pelicula("Interstellar", 181, Genero.CIENCIA_FICCION, Idioma.ESPANOL, Calidad.ALTA,4.5));
+        plataforma.getContenido().addAll(FileUtils.leerContenido());
     }
 }
