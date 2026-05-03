@@ -4,7 +4,7 @@ import platzi.play.contenido.*;
 import platzi.play.contenido.Calidad;
 import platzi.play.contenido.Genero;
 import platzi.play.contenido.Idioma;
-import platzi.play.contenido.Pelicula;
+import platzi.play.contenido.Contenido;
 import platzi.play.excepcion.PeliculaExistenteException;
 import platzi.play.plataforma.Plataforma;
 import platzi.play.util.FileUtils;
@@ -52,16 +52,28 @@ public class Main {
 
             switch (opcionElegida) {
                 case AGREGAR -> {
+                    int tipoDeContenido = ScannerUtils.capturarNumero("Que tipo de contenido quieres agregar? 1. Pelicula \n 2. Documental ");
                     String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
                     int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
                     Genero genero = ScannerUtils.capturarGenero("Genero del contenido");
                     Idioma idioma = ScannerUtils.capturarIdioma("Idioma del Contenido");
                     Calidad calida = ScannerUtils.capturarCalidad("Calidad del Contenido");
                     double calificacion = ScannerUtils.capturarDouble("Calificacion del contenido");
-                    Pelicula pelicula = new Pelicula(nombre, duracion, genero, idioma, calida, calificacion);
 
-                    FileUtils.escribirArchivo(pelicula);
-                    plataforma.agregar(pelicula);
+                    try {
+                        Contenido contenido;
+                        if (tipoDeContenido == 1) {
+                            contenido = new Pelicula(nombre, duracion, genero, idioma, calida, calificacion);
+                        } else {
+                            String narrador = ScannerUtils.capturarTexto("Narrador del documental");
+                            contenido = new Documental(nombre, duracion, genero, idioma, calida, calificacion, narrador);
+                        }
+                        FileUtils.escribirArchivo(contenido);
+                        plataforma.agregar(contenido);
+                    } catch (PeliculaExistenteException e) {
+                        System.out.println(e.getMessage());
+                    }
+
 
                 }
                 case MOSTRAR_TODO -> {
@@ -70,17 +82,17 @@ public class Main {
                 }
                 case BUSCAR_POR_TITULO -> {
                     String nombreBuscar = ScannerUtils.capturarTexto("Nombre del contenido");
-                    Pelicula pelicula = plataforma.buscarPorTitulo(nombreBuscar);
+                    Contenido contenido = plataforma.buscarPorTitulo(nombreBuscar);
 
-                    if(pelicula != null) {
-                        System.out.println(pelicula.obtenerFechaTecnica());
+                    if(contenido != null) {
+                        System.out.println(contenido.obtenerFechaTecnica());
                     } else {
                         System.out.println(nombreBuscar + " no existe dentro de la "+ plataforma.getNombre());
                     }
                 }
                 case BUSCAR_POR_GENERO -> {
                     Genero genero = ScannerUtils.capturarGenero("Genero del contenido");
-                    List<Pelicula> peliculasPorGenero = plataforma.buscarPorGenero(genero);
+                    List<Contenido> peliculasPorGenero = plataforma.buscarPorGenero(genero);
                     System.out.println(peliculasPorGenero.size() + " peliculas del contenido");
 
                     peliculasPorGenero.forEach(contenido -> System.out.println(contenido.obtenerFechaTecnica() + "\n"));
@@ -88,24 +100,24 @@ public class Main {
                 case VER_POPULARES -> {
                     int cantidad = ScannerUtils.capturarNumero("Cantidad del contenido a mostrar");
 
-                    List<Pelicula> contenidoPupulares = plataforma.getPopulares(cantidad);
+                    List<Contenido> contenidoPupulares = plataforma.getPopulares(cantidad);
                     contenidoPupulares.forEach(contenido -> System.out.println(contenido.obtenerFechaTecnica() + "\n"));
                 }
                 case VER_POPULARES_MAYORES_A_4 -> {
-                    List<Pelicula> contenidoPupularesMayoresA4 = plataforma.getPopularesMayoresA4();
+                    List<Contenido> contenidoPupularesMayoresA4 = plataforma.getPopularesMayoresA4();
                     contenidoPupularesMayoresA4.forEach(contenido -> System.out.println(contenido.obtenerFechaTecnica() + "\n"));
                 }
                 case PELICULA_MAS_LARGA -> {
-                    Pelicula peliculaMasLarga = plataforma.getPeliculaMasLarga();
-                    System.out.println(peliculaMasLarga.obtenerFechaTecnica() + "\n\n");
+                    Contenido contenidoMasLarga = plataforma.getPeliculaMasLarga();
+                    System.out.println(contenidoMasLarga.obtenerFechaTecnica() + "\n\n");
                 }
                 case PELICULA_MAS_CORTA -> {
-                    Pelicula peliculaMasCorta = plataforma.getPeliculaMasCorta();
-                    System.out.println(peliculaMasCorta.obtenerFechaTecnica() + "\n\n");
+                    Contenido contenidoMasCorta = plataforma.getPeliculaMasCorta();
+                    System.out.println(contenidoMasCorta.obtenerFechaTecnica() + "\n\n");
                 }
                 case REPRODUCIR -> {
                     String nombreAVer = ScannerUtils.capturarTexto("Nombre del contenido a reproducir");
-                    Pelicula contenido = plataforma.buscarPorTitulo(nombreAVer);
+                    Contenido contenido = plataforma.buscarPorTitulo(nombreAVer);
                     if (contenido != null) {
                         plataforma.reproducir(contenido);
                     } else {
@@ -114,7 +126,7 @@ public class Main {
                 }
                 case ELIMINAR -> {
                     String nombreAEliminar = ScannerUtils.capturarTexto("Nombre del contenido a Eliminar");
-                    Pelicula contenido = plataforma.buscarPorTitulo(nombreAEliminar);
+                    Contenido contenido = plataforma.buscarPorTitulo(nombreAEliminar);
 
                     if(contenido != null) {
                         plataforma.eliminar(contenido);
@@ -125,6 +137,7 @@ public class Main {
                 }
                 case SALIR -> System.exit(0);
 
+                default -> throw new IllegalStateException("Unexpected value: " + opcionElegida);
             }
         }
     }
