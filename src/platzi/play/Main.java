@@ -23,8 +23,9 @@ public class Main {
     public static final int PELICULA_MAS_LARGA = 7;
     public static final int PELICULA_MAS_CORTA = 8;
     public static final int REPRODUCIR = 9;
-    public static final int ELIMINAR = 10;
-    public static final int SALIR = 11;
+    public static final int BUSCAR_POR_TIPO = 10;
+    public static final int ELIMINAR = 11;
+    public static final int SALIR = 12;
 
     static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE);
@@ -45,8 +46,9 @@ public class Main {
                     7. Pelicula mas larga
                     8. Pelicula mas corta
                     9. Reproducir
-                    10. Eliminar
-                    11. Salir
+                    10. Buscar por tipo
+                    11. Eliminar
+                    12. Salir
                     """);
             System.out.println("Opcion elegida: " + opcionElegida);
 
@@ -123,6 +125,17 @@ public class Main {
                     } else {
                         System.out.println(nombreAVer + " no existe dentro de la "+ plataforma.getNombre());
                     }
+                }
+                case BUSCAR_POR_TIPO -> {
+                   int tipoContenido = ScannerUtils.capturarNumero("Que tipo de contenido quieres agregar? \n 1. Pelicula \n 2. Documental");
+
+                   if (tipoContenido == 1) {
+                       List<Pelicula> peliculas = plataforma.getPeliculas();
+                       peliculas.forEach(contenido -> System.out.println(contenido.obtenerFechaTecnica() + "\n"));
+                   } else {
+                       List<Documental> documentales = plataforma.getDocumentales();
+                       documentales.forEach(contenido -> System.out.println(contenido.obtenerFechaTecnica() + "\n"));
+                   }
                 }
                 case ELIMINAR -> {
                     String nombreAEliminar = ScannerUtils.capturarTexto("Nombre del contenido a Eliminar");
