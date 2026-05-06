@@ -4,8 +4,8 @@ import platzi.play.contenido.*;
 
 public class MainHeapStack {
     public static void main(String[] args) {
-        Contenido harryPotter = new Contenido("Harry Potter", 150, Genero.FANTASIA, Idioma.INGLES, Calidad.ALTA);
-        Contenido reyLeon = new Contenido("El Rey Leon", 200, Genero.ANIMADA, Idioma.PORTUGUES, Calidad.BAJA);
+        Contenido harryPotter = new Pelicula("Harry Potter", 150, Genero.FANTASIA, Idioma.INGLES, Calidad.ALTA, 4.0);
+        Contenido reyLeon = new Pelicula("El Rey Leon", 200, Genero.ANIMADA, Idioma.PORTUGUES, Calidad.BAJA, 5.0);
 
         reyLeon = harryPotter; // aqui cambiamos la referencia abos apuntan al mismo objeto
 

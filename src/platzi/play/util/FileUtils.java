@@ -57,7 +57,7 @@ public class FileUtils {
                 String[] datos = linea.split("\\" + SEPARADOR);
                 String tipoContenido = datos[0];
 
-                if (("PELICULA".equals(tipoContenido) && datos.length == 7) || ("DOCUMENTAL".equals(tipoContenido) && datos.length == 8)) {
+                if (("PELICULA".equals(tipoContenido) && datos.length == 9) || ("DOCUMENTAL".equals(tipoContenido) && datos.length == 9)) {
                     String tipo = datos[0];
                     String titulo = datos[1];
                     int duracion = Integer.parseInt(datos[2]);
@@ -69,7 +69,7 @@ public class FileUtils {
 
                     Contenido  contenido;
 
-                    if (tipo.equals(tipoContenido)) {
+                    if ("PELICULA".equals(tipoContenido)) {
                         contenido = new Pelicula(titulo, duracion, genero, idioma, calidad, calificacion);
                     } else {
                         contenido = new Documental(titulo, duracion, genero, idioma, calidad, calificacion, datos[8]);

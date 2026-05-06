@@ -2,7 +2,7 @@ package platzi.play.contenido;
 
 import java.time.LocalDate; // Es muy util para trabajar con zonas horarias
 
-public class Contenido {
+public abstract class Contenido {
     private String titulo; // tipo String sino se asigna simpre va ser null
     private String description; // igual aqui
     private int duracion; // valores enteros -> valor por defecto 0
@@ -28,9 +28,7 @@ public class Contenido {
         this.calificar(calificacion);
     }
 
-    public void reproducir() {
-        System.out.println("Reproducir " + titulo);
-    }
+    public abstract void reproducir();
 
     public String obtenerFechaTecnica() {
         return titulo + " ("+ fechaEstreno.getYear() + ") \n" +
