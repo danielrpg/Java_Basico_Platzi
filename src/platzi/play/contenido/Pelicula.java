@@ -9,4 +9,12 @@ public class Pelicula extends Contenido {
     public void reproducir() {
         System.out.println("Reproduciendo la pelicula " + this.getTitulo());
     }
+
+    @Override
+    public String obtenerFechaTecnica() {
+        return this.getTitulo() + " ("+ this.getFechaEstreno().getYear() + ") \n" +
+                "Genero: " + this.getGenero() + "\n"+
+                "Calificacion: " + this.getCalificacion() + "/5\n" +
+                "Duracion: " + this.getDuracion() + " minutos";
+    }
 }

@@ -30,11 +30,7 @@ public abstract class Contenido {
 
     public abstract void reproducir();
 
-    public String obtenerFechaTecnica() {
-        return titulo + " ("+ fechaEstreno.getYear() + ") \n" +
-                "Genero: " + genero + "\n"+
-                "Calificacion: " + calificacion + "/5";
-    }
+    public abstract String obtenerFechaTecnica();
 
     public void calificar(double calificacion) {
         if (calificacion >= 0 && calificacion <= 5) {
