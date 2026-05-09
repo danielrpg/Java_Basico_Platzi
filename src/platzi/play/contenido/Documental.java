@@ -1,6 +1,6 @@
 package platzi.play.contenido;
 
-public class Documental extends Contenido {
+public class Documental extends Contenido implements Promocionable { // al implementar de clase promocionable volvemos esta clase promocionable
     private String narrador;
 
     public Documental(String titulo, int duracion, Genero genero, Idioma idioma, Calidad calidad) {
@@ -28,5 +28,10 @@ public class Documental extends Contenido {
 
     public String getNarrador() {
         return narrador;
+    }
+
+    @Override
+    public String promocionar() { // el metodo promocionar es sobreescrito aqui
+        return " Descubre el Documental " + this.getTitulo() + " narrado por " + narrador + " Ahora en Platzi Play!"; // ahora si tiene definicion
     }
 }

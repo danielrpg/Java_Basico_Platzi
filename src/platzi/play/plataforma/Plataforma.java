@@ -85,6 +85,13 @@ public class Plataforma {
                 .toList();
     }
 
+    public List<Promocionable> getContenidoPromocionable() {
+        return contenido.stream()
+                .filter(contenido -> contenido instanceof Promocionable)
+                .map(contenido -> (Promocionable) contenido)
+                .toList();
+    }
+
     public List<Contenido> getPopularesMayoresA4() {
         return contenido.stream()
                 .filter(contenido -> contenido.getCalificacion() >= 4)
